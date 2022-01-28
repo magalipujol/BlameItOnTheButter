@@ -9,7 +9,7 @@ An app to save recipes and time.
 
 
 ### Instalation
-- Start the server
+- Start the server (folder with the index.js file)
   ```
   nodemon index
   ```
