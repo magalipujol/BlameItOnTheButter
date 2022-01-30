@@ -17,5 +17,10 @@ An app to save recipes and time.
   ```
   psql -U postgres
   ```
+- Start node server
+ ```
+  npm start
+  ```
+
 ### Tech stack
 - PERN(PostgreSQL, Express, React, Node)
