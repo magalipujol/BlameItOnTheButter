@@ -1,7 +1,8 @@
+import "reflect-metadata";
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const pool = require("./db");
+const pool = require("./server/src/db");
 
 // middleware
 app.use(cors());
