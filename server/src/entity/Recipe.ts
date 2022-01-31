@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinColumn, JoinTable } from "typeorm";
 import { Ingredient } from "./Ingredient";
 import { Appliance } from "./Appliance";
 import { Meal } from "./Meal";
@@ -21,11 +21,14 @@ export class Recipe {
   beforehand_prep: boolean;
 
   @ManyToMany((type) => Ingredient, (ingredient) => ingredient.recipes)
+  @JoinTable()
   ingredients: Ingredient[];
 
   @ManyToMany((type) => Meal, (meal) => meal.recipes)
+  @JoinTable()
   meals: Meal[];
 
   @ManyToMany((type) => Appliance, (appliance) => appliance.recipes)
+  @JoinTable()
   appliances: Appliance[];
 }

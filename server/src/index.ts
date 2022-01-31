@@ -1,22 +1,31 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
-import {Recipe} from "./entity/Recipe";
+import { createConnection } from "typeorm";
+import { Recipe } from "./entity/Recipe";
+import { Ingredient } from "./entity/Ingredient";
+import express = require("express");
 
-createConnection().then(async connection => {
+const app = express();
+app.use(express.json());
 
-    console.log("Inserting a new user into the database...");
+
+app.post("/addrecipe", async (req, res) => {
+  try {
+    const connection = await createConnection();
     const recipe = new Recipe();
-    recipe.title = "Pasta Carbonara";
-    recipe.instructions = "1. Boil pasta. 2. Add tomato sauce. 3. Add cheese. 4. Add bacon. 5. Cook for 20 minutes.";
-    recipe.estimated_time = 20;
-    recipe.beforehand_prep = true;
+    recipe.title = req.body.title;
+    recipe.instructions = req.body.instructions;
+    recipe.estimated_time = req.body.estimated_time;
+    recipe.beforehand_prep = req.body.beforehand_prep;
+
+    recipe.ingredients = req.body.ingredient_ids.map(
+      async (id) => await connection.manager.find(Ingredient, id)
+    );
     await connection.manager.save(recipe);
-    console.log("Saved a new user with id: " + recipe.id);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
-    console.log("Loading recipes from the database...");
-    const recipes = await connection.manager.find(Recipe);
-    console.log("Loaded recipes: ", recipes);
-
-    console.log("Here you can setup and run express/koa/any other framework.");
-
-}).catch(error => console.log(error));
+app.listen(5000, () => {
+  console.log("server has started on port 5000");
+});

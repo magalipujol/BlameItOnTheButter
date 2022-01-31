@@ -9,16 +9,20 @@ An app to save recipes and time.
 
 
 ### Instalation
-- Start the server (folder with the index.js file)
+- Install the npm dependencies
   ```
-  nodemon index
+  npm i
   ```
 - Start postgres
   ```
   psql -U postgres
   ```
+- Start the server (folder with the index.ts file)
+  ```
+  nodemon index
+  ```
 - Start node server
- ```
+  ```
   npm start
   ```
 
